@@ -107,7 +107,7 @@ BufferOp::precisionScaleFactor(const Geometry *g,
     cerr << " NEW scale factor: " << scaleFactor << endl;
   }
 */
-  return OLDscaleFactor;
+  //return OLDscaleFactor;
 
   return scaleFactor;
 }
@@ -231,7 +231,14 @@ BufferOp::bufferFixedPrecision(const PrecisionModel& fixedPM)
 
 
 	PrecisionModel pm(1.0); // fixed as well
-	snapround::MCIndexSnapRounder inoder(pm); 
+
+#if 0
+  snapround::MCIndexSnapRounder inoder(pm);
+#else
+  algorithm::LineIntersector li(&fixedPM);
+  IntersectionAdder ia(li);
+  MCIndexNoder inoder(&ia); // This works fine (but does not snapround)
+#endif
 
 	ScaledNoder noder(inoder, fixedPM.getScale());
 
