@@ -20,7 +20,7 @@ endif()
 
 # Location of custom CMake modules with macros used by GEOS
 set(CMAKE_MODULE_PATH "${geos_SOURCE_DIR}/cmake/modules")
-
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} /usr/src/cgal/CGAL-4.0/cmake/modules)
 #################################################################################
 # Setup GEOS version
 #################################################################################
@@ -44,7 +44,7 @@ set(CAPI_INTERFACE_AGE 8)
 math(EXPR CAPI_VERSION_MAJOR "${CAPI_INTERFACE_CURRENT} - ${CAPI_INTERFACE_AGE}")
 set(CAPI_VERSION_MINOR ${CAPI_INTERFACE_AGE})
 set(CAPI_VERSION_PATCH ${CAPI_INTERFACE_REVISION})
-set(CAPI_VERSION "${CAPI_VERSION_MAJOR}.${CAPI_VERSION_MINOR}.${CAPI_VERSION_PATCH}")
+set(CAPI_VERSION "1") #${CAPI_VERSION_MAJOR}.${CAPI_VERSION_MINOR}.${CAPI_VERSION_PATCH}")
 message(STATUS "Setting GEOS C API version ${CAPI_VERSION}")
 
 #################################################################################
@@ -108,6 +108,7 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 
   # Turn on Position Independent Code generation for GEOS C shared library
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 
   # Enable glibc ISO C99 features (macros isfinite, isnan)
   set(CMAKE_REQUIRED_DEFINITIONS "${CMAKE_REQUIRED_DEFINITIONS} -D_ISOC99_SOURCE=1")
@@ -229,6 +230,8 @@ include_directories(${geos_BINARY_DIR}/capi)
 # for including build-specific version.h, platform.h and geos_c.h
 include_directories(${geos_BINARY_DIR}/include)
 
+find_package(CGAL)
+include(${CGAL_USE_FILE})
 #################################################################################
 # Setup checks and generate config headers
 #################################################################################

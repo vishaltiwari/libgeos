@@ -63,6 +63,11 @@
 #include <geos/util/Machine.h>
 #include <geos/version.h> 
 
+#include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
+#include <CGAL/Projection_traits_xy_3.h>
+#include <CGAL/Delaunay_triangulation_2.h>
+#include <CGAL/convex_hull_2.h>
+
 // This should go away
 #include <cmath> // finite
 #include <cstddef>
@@ -1796,6 +1801,7 @@ GEOSSingleSidedBuffer_r(GEOSContextHandle_t extHandle, const Geometry *g1, doubl
     return NULL;
 }
 
+#if 1
 Geometry *
 GEOSConvexHull_r(GEOSContextHandle_t extHandle, const Geometry *g1)
 {
@@ -1813,6 +1819,95 @@ GEOSConvexHull_r(GEOSContextHandle_t extHandle, const Geometry *g1)
 
     try
     {
+        //handle->NOTICE_MESSAGE("I'm CGAL");
+
+	CoordinateSequence* cs = g1->getCoordinates();
+        typedef CGAL::Exact_predicates_inexact_constructions_kernel Kernel;
+        typedef Kernel Traits;
+        //typedef CGAL::Projection_traits_xy_3<Kernel> Traits;
+        //typedef Kernel::Point_3 Point_2;
+        typedef Kernel::Point_2 Point_2;        
+
+	std::vector<Traits::Point_2> points;
+
+        int nbpts=cs->size();
+        points.reserve(nbpts);
+        for (int i=0;i<nbpts;++i){
+          //points.push_back(Point_2((*cs)[i].x,(*cs)[i].y,(*cs)[i].z));
+          points.push_back(Point_2((*cs)[i].x,(*cs)[i].y));
+        }
+	delete cs;
+
+        //handle->NOTICE_MESSAGE("I'm CGAL after the loop");
+
+        //typedef CGAL::Delaunay_triangulation_2<Traits> DT2;
+        //DT2 dt2;
+        //dt2.insert(points.begin(),points.end());
+
+        //DT2::Vertex_circulator start=dt2.incident_vertices(dt2.infinite_vertex());  
+
+        //std::vector<Point_2> ch;
+        //DT2::Vertex_circulator curr=start;
+        //do{
+        //  ch.push_back( curr->point() );
+        //}while(++curr!=start);
+        
+        std::vector<Point_2> ch;
+        CGAL::convex_hull_2(points.begin(),points.end(),std::back_inserter(ch));
+        if(ch.size() > 1) ch.push_back(ch.front());
+	using namespace geos::geom; // TODO: make mat happy :)
+
+	typedef std::vector< Coordinate > CoordVect;
+	CoordVect* cv = new std::vector< Coordinate >();
+	cv->reserve(ch.size());
+        for ( std::vector<Point_2>::const_iterator it=ch.begin(), ite=ch.end(); it != ite; ++it )
+	{
+		//cv->push_back(Coordinate(it->x(), it->y(), it->z()));
+		cv->push_back(Coordinate(it->x(), it->y(), 0));
+	}
+
+	const GeometryFactory *gf = g1->getFactory();
+	CoordinateSequence* newcs = new CoordinateArraySequence(cv, 3);
+
+	// TODO: create a point for 1-vertex sequence, a line for 2-vertex sequence, a polygon otherwise
+        LinearRing *shell = gf->createLinearRing(newcs);
+
+	return gf->createPolygon(shell, NULL);
+
+
+   }
+    catch (const std::exception &e)
+    {
+        handle->ERROR_MESSAGE("%s", e.what());
+    }
+    catch (...)
+    {
+        handle->ERROR_MESSAGE("Unknown exception thrown");
+    }
+    
+    return NULL;
+}
+
+#else
+
+Geometry *
+GEOSConvexHull_r(GEOSContextHandle_t extHandle, const Geometry *g1)
+{
+    if ( 0 == extHandle )
+    {
+        return NULL;
+    }
+
+    GEOSContextHandleInternal_t *handle = 0;
+    handle = reinterpret_cast<GEOSContextHandleInternal_t*>(extHandle);
+    if ( 0 == handle->initialized )
+    {
+        return NULL;
+    }
+
+    try
+    {
+        handle->NOTICE_MESSAGE("I'm GEOS");
         Geometry *g3 = g1->convexHull();
         return g3;
     }
@@ -1827,6 +1922,8 @@ GEOSConvexHull_r(GEOSContextHandle_t extHandle, const Geometry *g1)
     
     return NULL;
 }
+
+#endif
 
 Geometry *
 GEOSDifference_r(GEOSContextHandle_t extHandle, const Geometry *g1, const Geometry *g2)
