@@ -83,7 +83,7 @@ private:
 	 * @return the determinant
 	 */
 
-	double det(double m00 , double m01 , double m10 , double m11);
+	double det(double m00 , double m01 , double m10 , double m11) const;
 
 
 };
