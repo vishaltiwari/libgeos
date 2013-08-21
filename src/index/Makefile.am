@@ -6,6 +6,7 @@ SUBDIRS = \
 	chain \
 	intervalrtree \
 	quadtree \
+	kdtree \
 	strtree \
 	sweepline
 
