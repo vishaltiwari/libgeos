@@ -473,6 +473,7 @@ AC_OUTPUT([
 	src/index/chain/Makefile
 	src/index/intervalrtree/Makefile
 	src/index/quadtree/Makefile
+	src/index/kdtree/Makefile
 	src/index/strtree/Makefile
 	src/index/sweepline/Makefile
 	src/io/Makefile
