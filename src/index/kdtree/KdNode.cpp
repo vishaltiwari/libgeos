@@ -34,23 +34,98 @@
 
 using namespace std;
 using namespace geos::geom;
+using geos::geom::Coordinate;
 
 namespace geos {
 namespace index { // geos.index
-namespace kdtree { // geos.index.quadtree
+namespace kdtree { // geos.index.kdtree
 
-KdNode::KdNode(const double _x,const double _y , void *data)
-	:   
-	*p = new Coordinate(_x,_y);
-	*left = NULL;
-	*right = NULL;
+KdNode::KdNode(const double _x,const double _y , void *d):
+	p(Coordinate(_x,_y)), left(NULL) , right(NULL) , count(1), data(d)
 {   
-
-
 }   
 
+KdNode::KdNode(const Coordinate &point , void *d):
+	p(point) , left(NULL) , right(NULL) , count(1), data(d)
 
+{
+}
 
-} // namespace geos.index.quadtree
+KdNode::~KdNode()
+{
+	if(left)
+		delete left;
+	if(right)
+		delete right;
+
+}
+
+double
+KdNode::getX()
+{
+	return p.x;
+}
+
+double
+KdNode::getY()
+{
+	return p.y;
+}
+
+geom::Coordinate
+KdNode::getCoordinate()
+{
+	return p;
+}
+
+void*
+KdNode::getData()
+{
+	return data;
+}
+
+KdNode*
+KdNode::getLeft()
+{
+	return left;
+}
+
+KdNode*
+KdNode::getRight()
+{
+	return right;
+}
+
+void
+KdNode::increment()
+{
+	++count;
+}
+
+int
+KdNode::getCount()
+{
+	return count;
+}
+
+bool 
+KdNode::isRepeated()
+{
+	return count>1;
+}
+
+void 
+KdNode::setLeft(const KdNode* _left)
+{
+	left =(KdNode*) _left;
+}
+
+void
+KdNode::setRight(const KdNode* _right)
+{
+	right = (KdNode*)_right;
+}
+
+} // namespace geos.index.kdtree
 } // namespace geos.index
 } // namespace geos

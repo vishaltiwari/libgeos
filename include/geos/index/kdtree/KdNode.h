@@ -40,7 +40,7 @@ namespace kdtree { // geos::index::kdtree
 class KdNode {
 
 private:
-	Coordinate *p;
+	geom::Coordinate p;
 	void *data;
 	KdNode *left;
 	KdNode *right;
@@ -48,6 +48,31 @@ private:
 
 public:
 	KdNode(const double _x,const double _y , void *data);
+
+	KdNode(const geom::Coordinate &p , void *data);
+
+	~KdNode();
+
+	double getX();
+
+	double getY();
+
+	geom::Coordinate getCoordinate();
+
+	void* getData();
+
+	KdNode* getLeft();
+	KdNode* getRight();
+
+	void increment();
+
+	int getCount();
+
+	bool isRepeated();
+
+	void setLeft(const KdNode* _left);
+
+	void setRight(const KdNode* _right);
 
 };
 
