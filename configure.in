@@ -442,6 +442,7 @@ AC_OUTPUT([
 	include/geos/index/chain/Makefile
 	include/geos/index/intervalrtree/Makefile
 	include/geos/index/quadtree/Makefile
+	include/geos/index/kdtree/Makefile
 	include/geos/index/strtree/Makefile
 	include/geos/index/sweepline/Makefile
 	include/geos/io/Makefile

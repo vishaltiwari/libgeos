@@ -8,4 +8,5 @@ EXTRA_DIST =
 geosdir = $(includedir)/geos/index/kdtree
 
 geos_HEADERS = \
-    KdNode.h
+    KdNode.h \
+    KdTree.h

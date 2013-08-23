@@ -6,4 +6,5 @@ noinst_LTLIBRARIES = libindexkdtree.la
 INCLUDES = -I$(top_srcdir)/include 
 
 libindexkdtree_la_SOURCES = \
-    KdNode.cpp
+    KdNode.cpp \
+    KdTree.cpp
