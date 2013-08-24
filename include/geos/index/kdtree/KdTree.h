@@ -20,17 +20,17 @@
 #define GEOS_IDX_KDTREE_KDTREE_H
 
 #include <geos/index/kdtree/KdTree.h>
-#include <geos/index/kdtree/KdNode.h>
 
-#include <geos/export.h>
-#include <geos/geom/Coordinate.h> 
-
-#include <string>
-#include <memory>
-
+#include <vector>
 namespace geos {
 	namespace geom {
 		class Coordinate;
+		class Envelope;
+	}
+	namespace index{
+		namespace kdtree{
+		class KdNode;
+		}
 	}
 }
 
@@ -52,6 +52,20 @@ public:
 	KdTree(double tolerance);
 
 	~KdTree();
+
+	bool isEmpty();
+
+	KdNode* insert(const geom::Coordinate &p);
+
+	KdNode* insert(const geom::Coordinate &p, void *data);
+
+	std::vector<void*> query(const geom::Envelope &queryEnv);
+
+	void query(const geom::Envelope &queryEnv, std::vector<void*> &result);
+
+private:
+	void queryNode(KdNode* currentNode, const KdNode* bottomNode, 
+			const geom::Envelope &queryEnv, bool odd, std::vector<void*> &result);
 
 };
 
