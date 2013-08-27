@@ -66,6 +66,7 @@ geos_unit_SOURCES = \
 	geom/TriangleTest.cpp \
 	geom/util/GeometryExtracterTest.cpp \
 	index/quadtree/DoubleBitsTest.cpp \
+	index/kdtree/KdNodeTest.cpp \
 	io/ByteOrderValuesTest.cpp \
 	io/WKBReaderTest.cpp \
 	io/WKBWriterTest.cpp \

@@ -19,5 +19,6 @@ libindex_la_LIBADD = \
 	chain/libindexchain.la \
 	intervalrtree/libintervalrtree.la \
 	quadtree/libindexquadtree.la \
+	kdtree/libindexkdtree.la \
 	strtree/libindexstrtree.la \
 	sweepline/libindexsweepline.la
