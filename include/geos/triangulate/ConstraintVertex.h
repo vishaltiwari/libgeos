@@ -39,7 +39,7 @@ private:
 public:
 	ConstraintVertex(const geom::Coordinate p);
 
-	void setOnConstraint(bool isOnConstraint);
+	void setOnConstraint(const bool isOnConstraint);
 
 	bool isConstraint();
 
@@ -48,7 +48,7 @@ public:
 	void* getConstraint();
 
 protected:
-	void merge(ConstraintVertex &other);
+	void merge(const ConstraintVertex &other);
 
 };
 

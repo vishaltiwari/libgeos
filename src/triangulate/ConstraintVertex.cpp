@@ -25,9 +25,8 @@ namespace geos {
 namespace triangulate { //geos.triangulate
 
 ConstraintVertex::ConstraintVertex(const geom::Coordinate p):
-	constraint(NULL)
+	constraint(NULL), Vertex(p)
 {
-	Vertex::Vertex(p);
 }
 
 void
@@ -55,7 +54,7 @@ ConstraintVertex::getConstraint()
 }
 
 void 
-ConstraintVertex::merge(ConstraintVertex &other)
+ConstraintVertex::merge(const ConstraintVertex &other)
 {
 	if(other.isOnConstraint)
 	{
