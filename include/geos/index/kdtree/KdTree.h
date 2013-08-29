@@ -47,8 +47,6 @@ private:
 	double tolerance;
 
 public:
-	KdTree();
-
 	KdTree(double tolerance);
 
 	~KdTree();
@@ -59,13 +57,13 @@ public:
 
 	KdNode* insert(const geom::Coordinate &p, void *data);
 
-	std::vector<void*> query(const geom::Envelope &queryEnv);
+	std::vector<KdNode*> query(const geom::Envelope &queryEnv);
 
-	void query(const geom::Envelope &queryEnv, std::vector<void*> &result);
+	void query(const geom::Envelope &queryEnv, std::vector<KdNode*> &result);
 
 private:
 	void queryNode(KdNode* currentNode, const KdNode* bottomNode, 
-			const geom::Envelope &queryEnv, bool odd, std::vector<void*> &result);
+			const geom::Envelope &queryEnv, bool odd, std::vector<KdNode*> &result);
 
 };
 

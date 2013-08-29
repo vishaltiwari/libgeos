@@ -41,7 +41,7 @@ namespace index { // geos.index
 namespace kdtree { // geos.index.kdtree
 
 KdTree::KdTree(double tolerance):
-	tolerance(tolerance)
+	tolerance(tolerance), root(NULL) , last(NULL), numberofNodes(0)
 {
 }
 
@@ -127,7 +127,7 @@ KdTree::insert(const geom::Coordinate &p, void *data)
 
 void
 KdTree::queryNode(KdNode* currentNode, const KdNode* bottomNode, 
-		        const geom::Envelope &queryEnv, bool odd, std::vector<void*> &result)
+		        const geom::Envelope &queryEnv, bool odd, std::vector<KdNode*> &result)
 {
 	if(currentNode == bottomNode)
 		return;
@@ -156,7 +156,7 @@ KdTree::queryNode(KdNode* currentNode, const KdNode* bottomNode,
 	}
 	if(queryEnv.contains(currentNode->getCoordinate()))
 	{
-		result.push_back((void*)currentNode);
+		result.push_back((KdNode*)currentNode);
 	}
 	if(searchRight)
 	{
@@ -164,20 +164,19 @@ KdTree::queryNode(KdNode* currentNode, const KdNode* bottomNode,
 	}
 }
 
-std::vector<void*>
+std::vector<KdNode*>
 KdTree::query(const geom::Envelope &queryEnv)
 {
-	std::vector<void*> result;
+	std::vector<KdNode*> result;
 	queryNode(root,last,queryEnv,true,result);
 	return result;
 }
 
 void
-KdTree::query(const geom::Envelope &queryEnv, std::vector<void*> &result)
+KdTree::query(const geom::Envelope &queryEnv, std::vector<KdNode*> &result)
 {
 	queryNode(root,last,queryEnv,true,result);
 }
-
 
 } // namespace geos.index.kdtree
 } // namespace geos.index
