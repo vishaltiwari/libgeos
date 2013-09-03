@@ -36,17 +36,17 @@ private:
 	void* data;
 
 public:
-	Segment(geom::Coordinate p0, geom::Coordinate p1);
+	Segment(const geom::Coordinate &p0,const geom::Coordinate &p1);
 
-	Segment(geom::Coordinate p0, geom::Coordinate p1 ,void* data);
+	Segment(const geom::Coordinate &p0,const geom::Coordinate &p1 ,void* data);
 
 	~Segment();
 	
 	geom::LineSegment* getLineSegment();
 
-	geom::Coordinate getStart();
+	geom::Coordinate& getStart();
 	
-	geom::Coordinate getEnd();
+	geom::Coordinate& getEnd();
 
 	double getStartX();
 	double getStartY();

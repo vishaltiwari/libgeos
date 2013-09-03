@@ -25,13 +25,13 @@ namespace geos {
 namespace triangulate { //geos.triangulate
 
 
-Segment::Segment(geom::Coordinate p0, geom::Coordinate p1):
+Segment::Segment(const geom::Coordinate &p0,const geom::Coordinate &p1):
 	ls(new geom::LineSegment(p0,p1)),
 	data(NULL)
 {
 }
 
-Segment::Segment(geom::Coordinate p0, geom::Coordinate p1, void* data):
+Segment::Segment(const geom::Coordinate &p0,const geom::Coordinate &p1, void* data):
 	ls(new geom::LineSegment(p0,p1)),
 	data(data)
 {
@@ -49,13 +49,13 @@ Segment::getLineSegment()
 	return ls;
 }
 
-geom::Coordinate
+geom::Coordinate&
 Segment::getStart()
 {
 	ls->getCoordinate(0);
 }
 
-geom::Coordinate
+geom::Coordinate&
 Segment::getEnd()
 {
 	ls->getCoordinate(1);
