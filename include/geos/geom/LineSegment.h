@@ -366,6 +366,8 @@ public:
 	 */
 	std::auto_ptr<LineString> toGeometry(const GeometryFactory& gf) const;
 
+	geom::Coordinate getCoordinate(int i) const;
+
 };
 
 std::ostream& operator<< (std::ostream& o, const LineSegment& l);
