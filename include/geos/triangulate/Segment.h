@@ -19,9 +19,7 @@
 #ifndef GEOS_TRIANGULATE_SEGMENT_H
 #define GEOS_TRIANGULATE_SEGMENT_H
 
-#include <list>
-#include <geos/triangulate/Segment.h>
-
+#include <geos/geom/LineSegment.h>
 namespace geos {
 namespace geom {
 	class Coordinate;
@@ -29,7 +27,7 @@ namespace geom {
 }
 namespace triangulate { //geos.triangulate
 
-class Segment 
+class GEOS_DLL Segment 
 {
 private:
 	geom::LineSegment* ls;
