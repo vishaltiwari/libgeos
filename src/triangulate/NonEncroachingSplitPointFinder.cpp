@@ -50,6 +50,7 @@ NonEncroachingSplitPointFinder projectedSplitPoint(const Segment &seg, geom::Coo
 {
 	geom::LineSegment* lineSeg = seg.getLineSegment();
 	geom::Coordinate projPt = lineSeg->project(encroachPt);
+	delete lineSeg;
 	return projPt;
 }
 
