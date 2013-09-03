@@ -313,5 +313,13 @@ LineSegment::toGeometry(const GeometryFactory& gf) const
 	);
 }
 
+geom::Coordinate
+LineSegment::getCoordinate(int i) const
+{
+	if(i == 0) 
+		return p0;
+	return p1;
+}
+
 } // namespace geos::geom
 } // namespace geos
