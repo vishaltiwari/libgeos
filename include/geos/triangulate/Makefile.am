@@ -11,4 +11,5 @@ geosdir = $(includedir)/geos/triangulate
 geos_HEADERS = \
 	IncrementalDelaunayTriangulator.h \
 	DelaunayTriangulationBuilder.h \
-	Segment.h
+	Segment.h \
+	ConstraintSplitPointFinder.h

@@ -11,7 +11,8 @@ INCLUDES = -I$(top_srcdir)/include
 libtriangulate_la_SOURCES = \
 	IncrementalDelaunayTriangulator.cpp \
 	DelaunayTriangulationBuilder.cpp \
-	Segment.cpp
+	Segment.cpp \
+	ConstraintSplitPointFinder.cpp
 
 libtriangulate_la_LIBADD = \
     quadedge/libquadedge.la

@@ -19,8 +19,7 @@
 #ifndef GEOS_TRIANGULATE_CONSTRAINTSPLITPOINTFINDER_H
 #define GEOS_TRIANGULATE_CONSTRAINTSPLITPOINTFINDER_H
 
-#include <geos/triangulate/ConstraintSplitPointFinder.h>
-
+#include <geos/triangulate/Segment.h>
 namespace geos {
 namespace geom{
 	class Coordinate;
@@ -37,7 +36,7 @@ namespace triangulate { //geos.triangulate
  * 
  * @author mbdavis
  */
-class GEOS_DLL ConstraintSplitPointFinder {
+class ConstraintSplitPointFinder {
 public:
 	/** 
 	 * Finds a point at which to split an encroached segment to allow the original segment to appear
@@ -47,7 +46,7 @@ public:
 	 * @param encroachPt the encroaching point
 	 * @return the point at which to split the encroached segment
 	 */
-	virtual geom::Coordinate findSplitPoint(Segment seg, Coordinate encroachPt) = 0;
+	virtual geom::Coordinate findSplitPoint(Segment seg, geom::Coordinate encroachPt) = 0;
 	virtual ~ConstraintSplitPointFinder() = 0 ;
 } ; 
 } //namespace geos.triangulate
