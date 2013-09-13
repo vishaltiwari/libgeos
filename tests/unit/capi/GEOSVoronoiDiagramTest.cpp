@@ -88,18 +88,18 @@ namespace tut
     template<>
     void object::test<1>()
     {
-        geom1_ = GEOSGeomFromWKT("POINT(10 20)");
+	    geom1_ = GEOSGeomFromWKT("POINT(10 20)");
 
-        geom2_ = GEOSVoronoiDiagram(geom1_,0, 0);
-        ensure_equals ( GEOSisEmpty(geom2_), 1 );
-        ensure_equals ( GEOSGeomTypeId(geom2_), GEOS_GEOMETRYCOLLECTION );
+	    geom2_ = GEOSVoronoiDiagram(geom1_,0, 0);
+	    ensure_equals ( GEOSisEmpty(geom2_), 1 );
+	    ensure_equals ( GEOSGeomTypeId(geom2_), GEOS_GEOMETRYCOLLECTION );
 
-	GEOSGeom_destroy(geom2_);
-	geom2_ = GEOSVoronoiDiagram(geom1_, 0, 1); 
-	char* wkt_c = GEOSWKTWriter_write(w_, geom2_);
-	std::string out(wkt_c);
-	free(wkt_c);
-	ensure_equals(out,"MULTILINESTRING EMPTY");
+	    GEOSGeom_destroy(geom2_);
+	    geom2_ = GEOSVoronoiDiagram(geom1_, 0, 1); 
+	    char* wkt_c = GEOSWKTWriter_write(w_, geom2_);
+	    std::string out(wkt_c);
+	    free(wkt_c);
+	    ensure_equals(out,"MULTILINESTRING EMPTY");
     }
 
     //More points:
