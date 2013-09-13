@@ -6219,7 +6219,7 @@ GEOSDelaunayTriangulation_r(GEOSContextHandle_t extHandle, const Geometry *g1, d
     return NULL;
 }
 Geometry* 
-GEOSVoronoiDiagramBuilder_r(GEOSContextHandle_t extHandle, const Geometry *g1,double tolerance)
+GEOSVoronoiDiagramBuilder_r(GEOSContextHandle_t extHandle, const Geometry *g1,double tolerance, int onlyEdges)
 {
 	if ( 0 == extHandle ) return NULL;
 
@@ -6230,11 +6230,13 @@ GEOSVoronoiDiagramBuilder_r(GEOSContextHandle_t extHandle, const Geometry *g1,do
 	using geos::triangulate::VoronoiDiagramBuilder;
 
 	try  
-	{    
+	{
 		VoronoiDiagramBuilder builder;
 		builder.setSites(*g1);
 		builder.setTolerance(tolerance);
-		return builder.getDiagram(*(g1->getFactory())).release();
+
+		if(onlyEdges) return builder.getSubdivision()->getEdges(*g1->getFactory()).release();
+		else return builder.getDiagram(*(g1->getFactory())).release();
 	}    
 	catch(const std::exception &e)
 	{    
